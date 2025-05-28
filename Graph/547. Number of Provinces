@@ -1,0 +1,46 @@
+class Solution {
+private:
+    vector<vector<int>> make_adjacency_list(vector<vector<int>>& isConnected){
+        vector<vector<int>> adj(isConnected.size());
+        for(int i=0;i<isConnected.size();i++){
+            for(int j =0;j<isConnected[i].size();j++){
+                if(i == j){
+                    continue;
+                }
+                //as it is undirected
+                if(isConnected[i][j] == 1){
+                    adj[i].push_back(j);
+                    adj[j].push_back(i);
+                }
+            }
+        }
+        return adj;
+    }
+    void dfs(vector<vector<int>>& adj, int start, vector<bool>& isVisited){
+        isVisited[start] = 1;
+
+        for(auto& neighbor: adj[start]){
+            if(!isVisited[neighbor]){
+                dfs(adj,neighbor,isVisited);
+            }
+        }
+    }
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        int provinces =0;
+
+        //step 1 : make adjacency list
+        vector<vector<int>> adj = make_adjacency_list(isConnected);
+
+        //step 2 : dfs traversal
+        vector<bool> isVisited(isConnected.size(),0);
+        for(int i =0;i<isConnected.size();i++){
+            if(isVisited[i]== 0){
+                provinces++;
+                dfs(adj,i,isVisited);
+            }
+        }
+
+        return provinces;
+    }
+};

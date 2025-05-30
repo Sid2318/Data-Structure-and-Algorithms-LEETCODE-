@@ -1,0 +1,37 @@
+-- # Write your MySQL query statement below
+-- Select d.name as Department, e.name as Employee, e.salary as Salary
+-- from Employee e , Department d
+-- where d.id = e.departmentId and e.departmentId exist in ( select e1.departmentId
+--                                                             from Employee e1
+--                                                             group by e1.departmentId
+--                                                             order by e1.Salary Desc
+--                                                             LIMIT 3  
+--                                                         )   
+
+# Write your MySQL query statement below
+-- Select d.name as Department, e.name as Employee, e.salary as Salary
+-- from Employee e 
+-- Join Department d
+-- on d.id = e.departmentId 
+-- where e.departmentId exists in ( select e1.departmentId
+--                                 from Employee e1
+--                                 group by e1.departmentId
+--                                 order by e1.Salary Desc
+--                                 LIMIT 3  
+--                                )   
+
+SELECT
+    d.name AS Department,
+    e.name AS Employee,
+    e.salary AS Salary
+FROM
+    Employee e
+    JOIN Department d ON e.departmentId = d.id
+WHERE
+    (
+        SELECT COUNT(DISTINCT salary)
+        FROM Employee e2
+        WHERE e2.departmentId = e.departmentId AND e2.salary >= e.salary
+    ) <= 3
+ORDER BY
+    Department, Salary DESC;

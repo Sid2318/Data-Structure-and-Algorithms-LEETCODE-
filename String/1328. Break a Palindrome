@@ -1,0 +1,46 @@
+class Solution {
+public:
+    // string breakPalindrome(string palindrome) {
+    //     vector<string> s;
+    //     if(palindrome.size() == 1){
+    //         return "";
+    //     }
+
+    //     unordered_map<char,int> mpp;
+    //     for(int i=0;i<palindrome.size();i++){
+    //         mpp[palindrome[i]]++;
+    //     }
+
+    //     if(mpp.size()==1 && palindrome[0] == 'a'){
+    //         return "";
+    //     }
+
+    //     // for(int i=0;i<palindrome.size();i++){
+    //     //     if(palindorme[i] != 'a'){
+    //     //         string g = palindrome;
+    //     //         g[i] = 
+    //     //     }
+    //     // }
+
+    //     for(int i=0;i<palindrome.size();i++){
+    //         if(palindrome[i] != 'a'){
+    //             palindrome[i] = ((palindrome[i]-'0'-1)+'0');
+    //             break;
+    //         }
+    //     }
+
+    //     return palindrome;
+    // }
+
+    string breakPalindrome(string S) {
+        int n = S.size();
+        for (int i = 0; i < n / 2; ++i) {
+            if (S[i] != 'a') {
+                S[i] = 'a';
+                return S;
+            }
+        }
+        S[n - 1] = 'b';
+        return n < 2 ? "" : S;
+    }
+};

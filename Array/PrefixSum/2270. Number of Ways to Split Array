@@ -25,14 +25,14 @@ public:
 // class Solution {
 // public:
 //     int waysToSplitArray(vector<int>& nums) {
-//         vector<int> prefixSum(nums.size());
+//         vector<long long> prefixSum(nums.size());
 //         prefixSum[0] = nums[0];
 //         for(int i=1;i<nums.size();i++){
 //             prefixSum[i] = prefixSum[i-1] + nums[i];
 //         }
 
 //         int splits = 0;
-//         int total = prefixSum[nums.size()-1];
+//         long long total = prefixSum[nums.size()-1];
 
 //         for(int i=0;i<prefixSum.size()-1;i++){
 //             if(prefixSum[i] >= (total - prefixSum[i])){

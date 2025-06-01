@@ -1,0 +1,46 @@
+class Solution {
+public:
+    int waysToSplitArray(vector<int>& nums) {
+        long long total = 0;
+        for(int i=0;i<nums.size();i++){
+            total += nums[i];
+        }
+        cout<<total<<endl;
+
+        int splits = 0;
+        long long curr = 0;
+        for(int i=0;i<nums.size()-1;i++){
+            curr += nums[i];
+            if(curr>= (total-curr)){
+                // cout<<curr<<" "<<total-curr<<endl;
+               splits++; 
+            }
+        }
+
+        return splits;
+    }
+};
+
+
+// class Solution {
+// public:
+//     int waysToSplitArray(vector<int>& nums) {
+//         vector<int> prefixSum(nums.size());
+//         prefixSum[0] = nums[0];
+//         for(int i=1;i<nums.size();i++){
+//             prefixSum[i] = prefixSum[i-1] + nums[i];
+//         }
+
+//         int splits = 0;
+//         int total = prefixSum[nums.size()-1];
+
+//         for(int i=0;i<prefixSum.size()-1;i++){
+//             if(prefixSum[i] >= (total - prefixSum[i])){
+//                 splits++;
+//                 cout<<prefixSum[i]<<" "<<total - prefixSum[i]<<endl;
+//             }
+//         }
+
+//         return splits;
+//     }
+// };

@@ -1,0 +1,96 @@
+class Solution {
+private:
+    void recur(vector<vector<int>>& arr, string& s, vector<int>& v, int index) {
+        if (v.size() == 4) {
+            if (index == s.size()) {
+                arr.push_back(v);
+            }
+            return;
+        }
+
+        for (int len = 1; len <= 3 && index + len <= s.size(); ++len) {
+            string part = s.substr(index, len);
+
+            // Skip if segment has leading zeros
+            if (part[0] == '0' && part.size() > 1) continue;
+
+            int num = stoi(part);
+            if (num >= 0 && num <= 255) {
+                v.push_back(num);
+                recur(arr, s, v, index + len);
+                v.pop_back(); // backtrack
+            }
+        }
+    }
+
+public:
+    vector<string> restoreIpAddresses(string s) {
+        vector<vector<int>> arr;
+        vector<int> v;
+        vector<string> ans;
+
+        recur(arr, s, v, 0);
+
+        // Convert vector of integers to string format
+        for (auto& ip : arr) {
+            string a = to_string(ip[0]) + "." + to_string(ip[1]) + "." +
+                       to_string(ip[2]) + "." + to_string(ip[3]);
+            ans.push_back(a);
+        }
+
+        return ans;
+    }
+};
+
+
+// class Solution {
+// private:
+//     void recur(vector<vector<int>>& arr, string s, vector<int>& v, int prev,
+//                int next) {
+//         if (v.size() == 4 && next != s.size() - 1) {
+//             return;
+//         }
+
+//         int num = stoi(s.substr(prev, next - prev + 1));
+//         if (next == s.size() - 1 &&  v.size() == 4) {
+//             if (num < 256 && num >= 0) {
+//                 v.push_back(num);
+//                 arr.push_back(v);
+//             }
+//             return;
+//         }
+
+//         if (num < 256 && num >= 0) {
+//             v.push_back(num);
+//         }
+
+//         if (num > 255) {
+//             prev++;
+//             recur(arr,s,v,prev,next);
+//         }
+
+//         next++;
+//         recur(arr,s,v,prev,next);
+//     }
+
+// public:
+//     vector<string> restoreIpAddresses(string s) {
+//         vector<vector<int>> arr;
+//         vector<int> v;
+//         vector<string> ans;
+//         recur(arr, s, v, 0, 0);
+
+//         // convert vectro to string
+//         for(int i =0;i<arr.size();i++){
+//             string a1 = to_string(arr[i][0]);
+//             string a2 = to_string(arr[i][1]);
+//             string a3 = to_string(arr[i][2]);
+//             string a4 = to_string(arr[i][3]);
+
+//             string a = a1+ "."+a2+"."+a3+"."+a4;
+//             ans.push_back(a);
+//         }
+
+//         return ans;
+//     }
+// };
